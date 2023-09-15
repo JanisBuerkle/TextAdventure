@@ -69,6 +69,10 @@ class Program
 
     public static void Spiel(double stärke, double geschwindigkeit, string player, double stärkeAnzeige, double geschwindigkeitAnzeige)
     {
+        int monsterlvl = 1;
+        double monsterhp = 5;
+        double schwertdmg = 1;
+
         Thread.Sleep(400);
         Console.Clear();
         Console.WriteLine("Du hast " + player + " gewählt!");
@@ -83,44 +87,61 @@ class Program
         Console.WriteLine("Hier hast du ein Schwert");
         Thread.Sleep(1000);
         string schwert = "Anfängerschwert";
-        double schwertdmg = 1;
+
         Console.WriteLine("+1 " + schwert);
         Thread.Sleep(2000);
         Console.Clear();
-        double level1hp = 5;
-        Console.WriteLine("Wildschwein " + level1hp + "hp");
-        while (level1hp > 0)
+
+        Console.WriteLine("Wildschwein " + monsterhp + "hp");
+        while (monsterhp > 0)
         {
             double fast2 = 2000 * geschwindigkeit;
             double fast = 2000 - fast2;
             Thread.Sleep(1000);
             double dmg1 = schwertdmg * stärke;
             double dmg = schwertdmg + dmg1;
-            level1hp = level1hp - dmg;
+            monsterhp = monsterhp - dmg;
 
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
-            Console.WriteLine(level1hp);
+            Console.WriteLine(monsterhp);
         }
-        level1hp = 0;
-        Console.WriteLine(level1hp);
+        monsterhp = 0;
+        Console.WriteLine(monsterhp);
 
         Console.WriteLine("Wenn du in die Stadt gehen willst schreibe 'Stadt' das geht immer!");
-        Console.WriteLine("Wenn du nicht in die Stadt gehst gebe tu nichts oder gebe weiter ein.");
+        Console.WriteLine("Wenn du nicht in die Stadt gehst drücke enter oder gebe 'weiter' ein.");
         Console.WriteLine("ACHTUNG! Wenn du weiter eingibst werden die Monster gefährlicher und werden Stärker!");
 
-        if (Console.ReadLine().ToLower() == "stadt")
+        string eingabe = Console.ReadLine();
+        if (eingabe.ToLower() == "stadt")
         {
-            Console.WriteLine("Willkommen in der Hauptstadt!");
-            Console.WriteLine("Hier gibt es einiges zu sehen!");
-            Console.WriteLine("Gebe die jeweiligen Nummern ein was du tun willst");
-            Console.WriteLine("1: Waffen & Rüstungsladen");
-            Console.WriteLine("2: Bar");
-            Console.WriteLine("3: Questtafel");
-            Console.WriteLine("4: Stadt verlassen");
+            Stadt();
+        }
+        else if (eingabe.ToLower() == "weiter")
+        {
+            Console.Clear();
+            Console.WriteLine("Achtung hier sind die Monster 1 Level höher");
+            monsterlvl++;
+            monsterhp = monsterhp * 1.25;
+        }
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("Du bleibst also");
         }
 
-
         Console.ReadKey();
+    }
+    public static void Stadt()
+    {
+        Console.Clear();
+        Console.WriteLine("Willkommen in der Hauptstadt!");
+        Console.WriteLine("Hier gibt es einiges zu sehen!");
+        Console.WriteLine("Gebe die jeweiligen Nummern ein was du tun willst");
+        Console.WriteLine("1: Waffen & Rüstungsladen");
+        Console.WriteLine("2: Bar");
+        Console.WriteLine("3: Questtafel");
+        Console.WriteLine("4: Stadt verlassen");
     }
 
 }
