@@ -87,22 +87,39 @@ class Program
         Console.WriteLine("+1 " + schwert);
         Thread.Sleep(2000);
         Console.Clear();
-        double hp = 5;
-        Console.WriteLine("Wildschwein " + hp + "HP");
-        while (hp > 0)
+        double level1hp = 5;
+        Console.WriteLine("Wildschwein " + level1hp + "hp");
+        while (level1hp > 0)
         {
             double fast2 = 2000 * geschwindigkeit;
             double fast = 2000 - fast2;
             Thread.Sleep(1000);
             double dmg1 = schwertdmg * stärke;
             double dmg = schwertdmg + dmg1;
-            hp = hp - dmg;
+            level1hp = level1hp - dmg;
 
-            Console.WriteLine("Wildschwein: -" + dmg + "HP");
-            Console.WriteLine(hp);
+            Console.WriteLine("Wildschwein: -" + dmg + "hp");
+            Console.WriteLine(level1hp);
         }
-        hp = 0;
-        Console.WriteLine(hp);
+        level1hp = 0;
+        Console.WriteLine(level1hp);
+
+        Console.WriteLine("Wenn du in die Stadt gehen willst schreibe 'Stadt' das geht immer!");
+        Console.WriteLine("Wenn du nicht in die Stadt gehst gebe tu nichts oder gebe weiter ein.");
+        Console.WriteLine("ACHTUNG! Wenn du weiter eingibst werden die Monster gefährlicher und werden Stärker!");
+
+        if (Console.ReadLine().ToLower() == "stadt")
+        {
+            Console.WriteLine("Willkommen in der Hauptstadt!");
+            Console.WriteLine("Hier gibt es einiges zu sehen!");
+            Console.WriteLine("Gebe die jeweiligen Nummern ein was du tun willst");
+            Console.WriteLine("1: Waffen & Rüstungsladen");
+            Console.WriteLine("2: Bar");
+            Console.WriteLine("3: Questtafel");
+            Console.WriteLine("4: Stadt verlassen");
+        }
+
+
         Console.ReadKey();
     }
 
