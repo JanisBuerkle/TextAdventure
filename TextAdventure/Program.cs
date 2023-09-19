@@ -1,14 +1,28 @@
 ﻿using System;
-using System.Data;
-using System.Media;
-using System.Security.Cryptography.X509Certificates;
+using System.Numerics;
 using System.Threading;
-using System.Threading.Tasks;
+using TextAdventure;
 
 class Program
 {
-    static void Main()
+    private static double saved = 5;
+
+
+    Var variable = new Var();
+    public Program(Var variable)
     {
+        this.variable = variable;
+    }
+
+
+    void Main()
+    {
+        variable.Monsterlvl = 1;
+        variable.Monsterhp = 5;
+        variable.Schwertdmg = 1;
+
+        
+
         while (true)
         {
             Console.Clear();
@@ -33,31 +47,30 @@ class Program
 
             if (charakter.ToLower() == "lisa")
             {
-                double stärke = 0.30;
-                double geschwindigkeit = 0.45;
-                double stärkeAnzeige = 2;
-                double geschwindigkeitAnzeige = 3;
-                string player = "Lisa";
-                Spiel(stärke, geschwindigkeit, player, stärkeAnzeige, geschwindigkeitAnzeige);
+                variable.Stärke = 0.30;
+                variable.Geschwindigkeit = 0.45;
+                variable.StärkeAnzeige = 2;
+                variable.GeschwindigkeitAnzeige = 3;
+                variable.Player = "Lisa";
+                Spiel();
             }
             else if (charakter.ToLower() == "thomas")
             {
-                double stärke = 0.45;
-                double geschwindigkeit = 0.30;
-                double stärkeAnzeige = 3;
-                double geschwindigkeitAnzeige = 2;
-                string player = "Thomas";
-                Spiel(stärke, geschwindigkeit, player, stärkeAnzeige, geschwindigkeitAnzeige);
+                variable.Stärke = 0.45;
+                variable.Geschwindigkeit = 0.30;
+                variable.StärkeAnzeige = 3;
+                variable.GeschwindigkeitAnzeige = 2;
+                variable.Player = "Thomas";
+                Spiel();
             }
             else if (charakter.ToLower() == "mike")
             {
-                double stärke = 0.60;
-                double geschwindigkeit = 0.15;
-                double stärkeAnzeige = 4;
-                double geschwindigkeitAnzeige = 1;
-                string player = "Mike";
-                Spiel(stärke, geschwindigkeit, player, stärkeAnzeige, geschwindigkeitAnzeige);
-
+                variable.Stärke = 0.60;
+                variable.Geschwindigkeit = 0.15;
+                variable.StärkeAnzeige = 4;
+                variable.GeschwindigkeitAnzeige = 1;
+                variable.Player = "Mike";
+                Spiel();
             }
             else
             {
@@ -67,19 +80,15 @@ class Program
         }
     }
 
-    public static void Spiel(double stärke, double geschwindigkeit, string player, double stärkeAnzeige, double geschwindigkeitAnzeige)
+    public void Spiel()
     {
-        int monsterlvl = 1;
-        double monsterhp = 5;
-        double schwertdmg = 1;
-
         Thread.Sleep(400);
         Console.Clear();
-        Console.WriteLine("Du hast " + player + " gewählt!");
+        Console.WriteLine("Du hast " + variable.Player + " gewählt!");
         Thread.Sleep(1000);
-        Console.WriteLine("Stärke " + stärkeAnzeige);
+        Console.WriteLine("Stärke " + variable.StärkeAnzeige);
         Thread.Sleep(500);
-        Console.WriteLine("Geschwindigkeit " + geschwindigkeitAnzeige);
+        Console.WriteLine("Geschwindigkeit " + variable.GeschwindigkeitAnzeige);
         Thread.Sleep(1500);
         Console.Clear();
         Console.WriteLine("ACHTUNG! Ein Wildschwein!");
@@ -91,57 +100,182 @@ class Program
         Console.WriteLine("+1 " + schwert);
         Thread.Sleep(2000);
         Console.Clear();
+        Farming();
+    }
 
-        Console.WriteLine("Wildschwein " + monsterhp + "hp");
-        while (monsterhp > 0)
+    public void Farming()
+    {
+        Console.WriteLine("Wildschwein " + variable.Monsterhp + "hp");
+        while (variable.Monsterhp > 0)
         {
-            double fast2 = 2000 * geschwindigkeit;
+            double fast2 = 2000 * variable.Geschwindigkeit;
             double fast = 2000 - fast2;
             Thread.Sleep(1000);
-            double dmg1 = schwertdmg * stärke;
-            double dmg = schwertdmg + dmg1;
-            monsterhp = monsterhp - dmg;
+            double dmg1 = variable.Schwertdmg * variable.Stärke;
+            double dmg = variable.Schwertdmg + dmg1;
+            variable.Monsterhp = variable.Monsterhp - dmg;
 
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
-            Console.WriteLine(monsterhp);
-        }
-        monsterhp = 0;
-        Console.WriteLine(monsterhp);
-
-        Console.WriteLine("Wenn du in die Stadt gehen willst schreibe 'Stadt' das geht immer!");
-        Console.WriteLine("Wenn du nicht in die Stadt gehst drücke enter oder gebe 'weiter' ein.");
-        Console.WriteLine("ACHTUNG! Wenn du weiter eingibst werden die Monster gefährlicher und werden Stärker!");
-
-        string eingabe = Console.ReadLine();
-        if (eingabe.ToLower() == "stadt")
-        {
-            Stadt();
-        }
-        else if (eingabe.ToLower() == "weiter")
-        {
-            Console.Clear();
-            Console.WriteLine("Achtung hier sind die Monster 1 Level höher");
-            monsterlvl++;
-            monsterhp = monsterhp * 1.25;
-        }
-        else
-        {
-            Console.Clear();
-            Console.WriteLine("Du bleibst also");
+            Console.WriteLine(variable.Monsterhp);
         }
 
-        Console.ReadKey();
+        Console.WriteLine("Wenn du in die Stadt gehen willst, schreibe 'Stadt'.");
+        Console.WriteLine("Wenn du nicht in die Stadt gehst, drücke Enter oder gib 'weiter' ein.");
+        Console.WriteLine("ACHTUNG! Wenn du weiter eingibst, werden die Monster gefährlicher und variable.Stärker!");
+
+        while (true)
+        {
+            Switch();
+        }
     }
-    public static void Stadt()
+
+    public void Stay()
+    {
+        Console.Clear();
+        Console.WriteLine("Du bleibst also");
+    }
+
+    public void HPRechnung()
+    {
+        variable.Monsterhp = variable.Save;
+        double multiplikator = 1.25;
+        variable.Monsterhp *= multiplikator;
+        double saved = variable.Monsterhp;
+        Weiter();
+    }
+
+
+    public void Weiter()
+    {
+        Console.Clear();
+        Console.WriteLine("Achtung, hier sind die Monster 1 Level höher.");
+        Console.WriteLine("Gebe 'kill' ein, um Monster zu töten.");
+        while (true)
+        {
+
+            Switch();
+            
+        }
+    }
+
+    public void Switch()
+    {
+        int level = 0;
+        level++;
+        string input = Console.ReadLine();
+        switch (input.ToLower())
+        {
+            case "kill":
+                if (level >= 10)
+                {
+                    Wildschwein();
+                    Thread.Sleep(200);
+                }
+                else
+                {
+                    Wildschwein();
+                    Thread.Sleep(300);
+                }
+                break;
+            case "weiter":
+                variable.Monsterhp = 5;
+                HPRechnung();
+                break;
+            case "stadt":
+                Stadt();
+                break;
+        }
+    }
+
+    public void Wildschwein()
+    {
+        Console.WriteLine("Wildschwein " + variable.Monsterhp + "hp");
+        while (variable.Monsterhp > 0)
+        {
+            double fast2 = 2000 * variable.Geschwindigkeit;
+            double fast = 2000 - fast2;
+            Thread.Sleep(1000);
+            double dmg1 = variable.Schwertdmg * variable.Stärke;
+            double dmg = variable.Schwertdmg + dmg1;
+            variable.Monsterhp = variable.Monsterhp - dmg;
+
+            Console.WriteLine("Wildschwein: -" + dmg + "hp");
+            Console.WriteLine(variable.Monsterhp);
+        }
+    }
+
+    public void Stadt()
     {
         Console.Clear();
         Console.WriteLine("Willkommen in der Hauptstadt!");
         Console.WriteLine("Hier gibt es einiges zu sehen!");
-        Console.WriteLine("Gebe die jeweiligen Nummern ein was du tun willst");
+        Console.WriteLine("Gebe die jeweiligen Nummern ein, was du tun willst");
         Console.WriteLine("1: Waffen & Rüstungsladen");
         Console.WriteLine("2: Bar");
         Console.WriteLine("3: Questtafel");
         Console.WriteLine("4: Stadt verlassen");
+
+        string choice = Console.ReadLine();
+        switch (choice)
+        {
+            case "1":
+                Weapon();
+                break;
+            case "2":
+                Bar();
+                break;
+            case "3":
+                Quest();
+                break;
+            case "4":
+                Leave();
+                break;
+            default:
+                Console.WriteLine("Ungültig!");
+                break;
+        }
     }
 
+    public void Weapon()
+    {
+        Console.Clear();
+        Console.WriteLine("Willkommen in meinem Waffenladen!");
+        Console.WriteLine("Wie kann ich dir helfen?");
+        Console.WriteLine("Gebe die jeweiligen Nummern ein, was du tun willst");
+        Console.WriteLine("1: Waffen kaufen");
+        Console.WriteLine("2: Rüstung kaufen");
+        Console.WriteLine("3: Laden verlassen");
+
+        string choice = Console.ReadLine();
+        switch (choice)
+        {
+            case "1":
+
+                break;
+            case "2":
+
+                break;
+            case "3":
+                Stadt();
+                break;
+            default:
+                Console.WriteLine("Ungültig!");
+                break;
+        }
+    }
+
+    public void Bar()
+    {
+
+    }
+
+    public void Quest()
+    {
+
+    }
+
+    public void Leave()
+    {
+
+    }
 }
