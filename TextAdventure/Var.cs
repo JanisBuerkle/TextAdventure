@@ -17,8 +17,8 @@ namespace TextAdventure
         public double Monsterhp { get; set; }
         public double Schwertdmg { get; set; }
         public int Monsterlvl { get; set; }
-        public double Save { get; set; }
-
+        public double Multiplikator { get; set; }
+        public double Gold { get; set; }
         public Var()
         { 
         

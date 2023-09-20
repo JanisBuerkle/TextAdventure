@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Discord;
+using Discord.Interactions.Builders;
+using System;
 using System.Numerics;
 using System.Threading;
 using TextAdventure;
@@ -7,25 +9,24 @@ class Program
 {
     private static double saved = 5;
 
+    private Var variable = new Var();
 
-    Var variable = new Var();
-    public Program(Var variable)
+    public Program()
     {
-        this.variable = variable;
-    }
-
-
-    void Main()
-    {
+        variable.Saved = 5;
         variable.Monsterlvl = 1;
         variable.Monsterhp = 5;
         variable.Schwertdmg = 1;
+    }
 
-        
+    static void Main(string[] args)
+    {
+        Program program = new Program();
 
         while (true)
         {
             Console.Clear();
+            program.variable.Gold = 200;
             Console.WriteLine("Willkommen im RPG Game :D");
             Console.WriteLine("Wähle deinen Charakter!");
             Console.WriteLine("*********************");
@@ -47,30 +48,30 @@ class Program
 
             if (charakter.ToLower() == "lisa")
             {
-                variable.Stärke = 0.30;
-                variable.Geschwindigkeit = 0.45;
-                variable.StärkeAnzeige = 2;
-                variable.GeschwindigkeitAnzeige = 3;
-                variable.Player = "Lisa";
-                Spiel();
+                program.variable.Stärke = 0.30;
+                program.variable.Geschwindigkeit = 0.45;
+                program.variable.StärkeAnzeige = 2;
+                program.variable.GeschwindigkeitAnzeige = 3;
+                program.variable.Player = "Lisa";
+                program.Spiel();
             }
             else if (charakter.ToLower() == "thomas")
             {
-                variable.Stärke = 0.45;
-                variable.Geschwindigkeit = 0.30;
-                variable.StärkeAnzeige = 3;
-                variable.GeschwindigkeitAnzeige = 2;
-                variable.Player = "Thomas";
-                Spiel();
+                program.variable.Stärke = 0.45;
+                program.variable.Geschwindigkeit = 0.30;
+                program.variable.StärkeAnzeige = 3;
+                program.variable.GeschwindigkeitAnzeige = 2;
+                program.variable.Player = "Thomas";
+                program.Spiel();
             }
             else if (charakter.ToLower() == "mike")
             {
-                variable.Stärke = 0.60;
-                variable.Geschwindigkeit = 0.15;
-                variable.StärkeAnzeige = 4;
-                variable.GeschwindigkeitAnzeige = 1;
-                variable.Player = "Mike";
-                Spiel();
+                program.variable.Stärke = 0.60;
+                program.variable.Geschwindigkeit = 0.15;
+                program.variable.StärkeAnzeige = 4;
+                program.variable.GeschwindigkeitAnzeige = 1;
+                program.variable.Player = "Mike";
+                program.Spiel();
             }
             else
             {
@@ -85,6 +86,8 @@ class Program
         Thread.Sleep(400);
         Console.Clear();
         Console.WriteLine("Du hast " + variable.Player + " gewählt!");
+        Thread.Sleep(1000);
+        Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
         Thread.Sleep(1000);
         Console.WriteLine("Stärke " + variable.StärkeAnzeige);
         Thread.Sleep(500);
@@ -121,7 +124,7 @@ class Program
 
         Console.WriteLine("Wenn du in die Stadt gehen willst, schreibe 'Stadt'.");
         Console.WriteLine("Wenn du nicht in die Stadt gehst, drücke Enter oder gib 'weiter' ein.");
-        Console.WriteLine("ACHTUNG! Wenn du weiter eingibst, werden die Monster gefährlicher und variable.Stärker!");
+        Console.WriteLine("ACHTUNG! Wenn du weiter eingibst, werden die Monster gefährlicher und Stärker!");
 
         while (true)
         {
@@ -137,10 +140,10 @@ class Program
 
     public void HPRechnung()
     {
-        variable.Monsterhp = variable.Save;
+        variable.Monsterhp = saved; 
         double multiplikator = 1.25;
         variable.Monsterhp *= multiplikator;
-        double saved = variable.Monsterhp;
+        saved = variable.Monsterhp; 
         Weiter();
     }
 
@@ -152,9 +155,7 @@ class Program
         Console.WriteLine("Gebe 'kill' ein, um Monster zu töten.");
         while (true)
         {
-
             Switch();
-            
         }
     }
 
@@ -189,6 +190,8 @@ class Program
 
     public void Wildschwein()
     {
+        Random zufallsgenerator = new Random();
+        int rnd = zufallsgenerator.Next(0, 2);
         Console.WriteLine("Wildschwein " + variable.Monsterhp + "hp");
         while (variable.Monsterhp > 0)
         {
@@ -202,6 +205,11 @@ class Program
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
             Console.WriteLine(variable.Monsterhp);
         }
+        variable.Gold += rnd;
+        Console.WriteLine("Du hast das Wildschwein besiegt!");
+        Console.WriteLine("Du erhälst " + rnd + " Goldmünzen!");
+        variable.Monsterhp = saved;
+        Console.WriteLine(variable.Monsterhp);
     }
 
     public void Stadt()
@@ -228,7 +236,7 @@ class Program
                 Quest();
                 break;
             case "4":
-                Leave();
+                Weiter();
                 break;
             default:
                 Console.WriteLine("Ungültig!");
@@ -266,7 +274,72 @@ class Program
 
     public void Bar()
     {
-
+        Console.Clear();
+        Console.WriteLine("Willkommen in meiner Bar. Was kann ich für dich tun?");
+        Console.WriteLine("1. Trinken");
+        Console.WriteLine("2. Verlassen");
+        
+        string input = Console.ReadLine();
+        if (input == "1")
+        {
+            Console.Clear();
+            Console.WriteLine("Herzlich willkommen, Fremder! Was darf's sein, in unserer ehrwürdigen Taverne?");
+            Console.WriteLine("1: Drachenblut Ale");
+            Console.WriteLine("2: Feuerschlucker Schnaps");
+            Console.WriteLine("3: Eutertrunk");
+            string auswahl = Console.ReadLine();
+            switch (auswahl)
+            {
+                case "1":
+                    Console.Clear();
+                    Console.WriteLine("Ihr habt Geschmack, mein Freund! Dieser Trank wird Euch wohltun, das versprech' ich Euch.");
+                    Thread.Sleep(500);
+                    Console.WriteLine("Hier ist Euer Ale, mein Freund.");
+                    Thread.Sleep(500);
+                    Console.WriteLine("Für Euer Ale sind es 2 Goldmünzen. Prost und möge es Euch erfreuen.");
+                    variable.Gold -= 2;
+                    Thread.Sleep(500);
+                    Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
+                    Console.ReadKey();
+                    Bar();
+                    break;
+                case "2":
+                    Console.Clear();
+                    Console.WriteLine("Ah, ein Freund des Feuerschlucker Schnapses! Das macht 3 Goldmünzen");
+                    Thread.Sleep(500); 
+                    Console.WriteLine("Hier ist Euer Schnaps!");
+                    variable.Gold -= 3;
+                    Thread.Sleep(500);
+                    Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
+                    Console.ReadKey();
+                    Bar();
+                    break;
+                case "3":
+                    Console.Clear();
+                    Console.WriteLine("Ah, die Einfachheit der Milch, eine Wohltat für Leib und Seele. Ihr werdet die Frische dieses Tranks schätzen.");
+                    Thread.Sleep(500);
+                    Console.WriteLine("Hier ist Deine Milch.");
+                    Thread.Sleep(500);
+                    Console.WriteLine("Das macht 2 Goldmünzen für Eure Milch. Genießt sie in bester Gesundheit.");
+                    variable.Gold -= 2;
+                    Thread.Sleep(500);
+                    Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
+                    Console.ReadKey();
+                    Bar();
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("Ein fremdartiger Name für ein Getränk! In unserer Taverne sind wir immer offen für Neues.");
+                    Console.ReadKey();
+                    Bar();
+                    break;
+            }
+        } 
+        else 
+        { 
+            Console.Clear();
+            Stadt();
+        }
     }
 
     public void Quest()
