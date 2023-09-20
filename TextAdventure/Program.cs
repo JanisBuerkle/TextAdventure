@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms.VisualStyles;
 using TextAdventure;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 class Program
 {
@@ -19,7 +20,10 @@ class Program
         variable.Saved = 5;
         variable.Monsterlvl = 1;
         variable.Monsterhp = 5;
-        variable.Schwertdmg = 1;
+        variable.Schwertdmg = 5;
+        variable.Leben = 100;
+        variable.Damage = 1;
+        
     }
 
     static void Main(string[] args)
@@ -144,8 +148,9 @@ class Program
     public void HPRechnung()
     {
         variable.Monsterhp = saved; 
-        double multiplikator = 1.25;
+        double multiplikator = 1.5;
         variable.Monsterhp *= multiplikator;
+        variable.Monsterlvl++;
         saved = variable.Monsterhp; 
         Weiter();
     }
@@ -155,7 +160,7 @@ class Program
     {
         variable.Monsterhp = saved;
         Console.Clear();
-        Console.WriteLine("Achtung, hier sind die Monster 1 Level höher.");
+        Console.WriteLine("Achtung, hier sind die Monster auf Level " + variable.Monsterlvl + "!");
         Console.WriteLine("Gebe 'kill' ein, um Monster zu töten.");
         while (true)
         {
@@ -171,6 +176,7 @@ class Program
         switch (input.ToLower())
         {
             case "kill":
+                Console.Clear();
                 if (level >= 10)
                 {
                     Wildschwein();
@@ -194,9 +200,10 @@ class Program
 
     public void Wildschwein()
     {
+        string formatierteMonsterhp = variable.Monsterhp.ToString("F0");
         Random zufallsgenerator = new Random();
-        double rnd = zufallsgenerator.Next(0, 3);
-        Console.WriteLine("Wildschwein " + variable.Monsterhp + "hp");
+        double rnd = zufallsgenerator.Next(0, 5);
+        Console.WriteLine("Wildschwein " + formatierteMonsterhp + "hp");
         while (variable.Monsterhp > 0)
         {
             double fast2 = 2000 * variable.Geschwindigkeit;
@@ -207,15 +214,42 @@ class Program
             variable.Monsterhp = variable.Monsterhp - dmg;
 
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
-            Console.WriteLine(variable.Monsterhp);
+            string formatierteMonsterhpp = variable.Monsterhp.ToString("F0");
+            Console.WriteLine("Das Wildschwein hat noch " + formatierteMonsterhpp + "HP!");
+            Random rndm = new Random();
+            double random = rndm.Next(1, 4);
+            double mobdmgt = variable.Monsterlvl * 1.7 + random;
+            double mobdmg = variable.Damage + mobdmgt;
+            variable.Leben -= mobdmg;
+            Console.WriteLine("Das Wildschwein hat dir " + mobdmg + " Leben abgezogen!");
+            string formatierteLeben = variable.Leben.ToString("F0");
+            Console.WriteLine("Du hast noch " + formatierteLeben + " Leben!");
+            if (variable.Leben < 0)
+            {
+                variable.Gold = variable.Gold * 0.25;
+                Console.WriteLine("Du wirst in der Stadt neugespawnt und verlierst 25% deines Geldes!");
+                Console.WriteLine("Du hast nun noch " + variable.Gold + "Gold");
+                Console.WriteLine("Warte 3 Sekunden bis du Spawnst!");
+                Thread.Sleep(3000);
+                Stadt();
+            }
         }
-        double rechnung = variable.Monsterlvl /= 2;
-        double reward = rnd += rechnung;
-        variable.Gold += reward;
-        Console.WriteLine("Du hast das Wildschwein besiegt!");
-        Console.WriteLine("Du erhälst " + reward + " Goldmünzen!");
+
+        double rechnung = saved / 10;
+        double reward = rnd + rechnung;
+
+        string formatierterReward = reward.ToString("F0");
+        string formatiertesLeben = variable.Leben.ToString("F0");
+        string formatiertesGold = variable.Gold.ToString("F0");
+        int rewardConvert = Convert.ToInt32(reward);
+        variable.Gold += rewardConvert;
         variable.Monsterhp = saved;
-        Console.WriteLine(variable.Monsterhp);
+        Console.Clear();
+        Console.WriteLine("Du hast das Wildschwein Level " + variable.Monsterlvl + " besiegt!");
+        Console.WriteLine("Das Wilschwein hatte " + formatierteMonsterhp + "HP");
+        Console.WriteLine("Du hast noch " + formatiertesLeben + " Leben!");
+        Console.WriteLine("Du erhälst " + formatierterReward + " Goldmünzen!");
+        Console.WriteLine("Du hast nun insgesamt " + variable.Gold + " Goldmünzen!");
     }
 
     public void Stadt()
@@ -303,6 +337,7 @@ class Program
                     Console.WriteLine("Für Euer Ale sind es 2 Goldmünzen. Prost und möge es Euch erfreuen.");
                     variable.Gold -= 2;
                     Thread.Sleep(500);
+                    string formatierterReward = variable.Gold.ToString("F2");
                     Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
                     Console.ReadKey();
                     Taverne();

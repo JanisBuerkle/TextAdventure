@@ -19,6 +19,8 @@ namespace TextAdventure
         public int Monsterlvl { get; set; }
         public double Multiplikator { get; set; }
         public double Gold { get; set; }
+        public double Leben { get; set; }
+        public double Damage { get; set; }
         public Var()
         { 
         
