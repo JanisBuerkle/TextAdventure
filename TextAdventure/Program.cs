@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Interactions.Builders;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -15,25 +16,37 @@ class Program
 
     private Var variable = new Var();
 
+
+
     public Program()
     {
         variable.Saved = 5;
         variable.Monsterlvl = 1;
         variable.Monsterhp = 5;
-        variable.Schwertdmg = 5;
+        variable.Schwertdmg = 1;
         variable.Leben = 100;
         variable.Damage = 1;
-        
+
     }
 
     static void Main(string[] args)
     {
+        List<Swords> swords = new List<Swords>()
+        {
+        new Swords() { Name = "Anfängerschwert", Damage = 1 },
+        new Swords() { Name = "Drachenklinge", Damage = 5 },
+        new Swords() { Name = "Dead Sword", Damage = 10 },
+        };
+
         Program program = new Program();
 
         while (true)
         {
             Console.Clear();
             program.variable.Gold = 200;
+            Console.WriteLine(swords[0].Name + swords[0].Damage);
+            Console.WriteLine(swords[1].Name + swords[1].Damage);
+            Console.WriteLine(swords[2].Name + swords[2].Damage);
             Console.WriteLine("Willkommen im RPG Game :D");
             Console.WriteLine("Wähle deinen Charakter!");
             Console.WriteLine("*********************");
@@ -90,21 +103,21 @@ class Program
 
     public void Spiel()
     {
-        Thread.Sleep(400);
+        Thread.Sleep(500);
         Console.Clear();
         Console.WriteLine("Du hast " + variable.Player + " gewählt!");
-        Thread.Sleep(1000);
-        Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
-        Thread.Sleep(1000);
-        Console.WriteLine("Stärke " + variable.StärkeAnzeige);
-        Thread.Sleep(500);
-        Console.WriteLine("Geschwindigkeit " + variable.GeschwindigkeitAnzeige);
         Thread.Sleep(1500);
+        Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
+        Thread.Sleep(1500);
+        Console.WriteLine("Stärke " + variable.StärkeAnzeige);
+        Thread.Sleep(1500);
+        Console.WriteLine("Geschwindigkeit " + variable.GeschwindigkeitAnzeige);
+        Thread.Sleep(2000);
         Console.Clear();
         Console.WriteLine("ACHTUNG! Ein Wildschwein!");
-        Thread.Sleep(1000);
+        Thread.Sleep(1500);
         Console.WriteLine("Hier hast du ein Schwert");
-        Thread.Sleep(1000);
+        Thread.Sleep(1500);
         string schwert = "Anfängerschwert";
 
         Console.WriteLine("+1 " + schwert);
@@ -207,8 +220,9 @@ class Program
         while (variable.Monsterhp > 0)
         {
             double fast2 = 2000 * variable.Geschwindigkeit;
-            double fast = 2000 - fast2;
-            Thread.Sleep(1000);
+            int fast3 = Convert.ToInt32(fast2);
+            int fast = 2000 - fast3;
+            Thread.Sleep(fast);
             double dmg1 = variable.Schwertdmg * variable.Stärke;
             double dmg = variable.Schwertdmg + dmg1;
             variable.Monsterhp = variable.Monsterhp - dmg;
@@ -230,7 +244,8 @@ class Program
                 Console.WriteLine("Du wirst in der Stadt neugespawnt und verlierst 25% deines Geldes!");
                 Console.WriteLine("Du hast nun noch " + variable.Gold + "Gold");
                 Console.WriteLine("Warte 3 Sekunden bis du Spawnst!");
-                Thread.Sleep(3000);
+                variable.Leben = 100;
+                Thread.Sleep(4000);
                 Stadt();
             }
         }

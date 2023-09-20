@@ -21,9 +21,11 @@ namespace TextAdventure
         public double Gold { get; set; }
         public double Leben { get; set; }
         public double Damage { get; set; }
+
+
+
         public Var()
-        { 
-        
+        {
         }
     }
 }
