@@ -2,7 +2,10 @@
 using Discord.Interactions.Builders;
 using System;
 using System.Numerics;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
+using System.Windows.Forms.VisualStyles;
 using TextAdventure;
 
 class Program
@@ -150,6 +153,7 @@ class Program
 
     public void Weiter()
     {
+        variable.Monsterhp = saved;
         Console.Clear();
         Console.WriteLine("Achtung, hier sind die Monster 1 Level höher.");
         Console.WriteLine("Gebe 'kill' ein, um Monster zu töten.");
@@ -191,7 +195,7 @@ class Program
     public void Wildschwein()
     {
         Random zufallsgenerator = new Random();
-        int rnd = zufallsgenerator.Next(0, 2);
+        double rnd = zufallsgenerator.Next(0, 3);
         Console.WriteLine("Wildschwein " + variable.Monsterhp + "hp");
         while (variable.Monsterhp > 0)
         {
@@ -205,9 +209,11 @@ class Program
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
             Console.WriteLine(variable.Monsterhp);
         }
-        variable.Gold += rnd;
+        double rechnung = variable.Monsterlvl /= 2;
+        double reward = rnd += rechnung;
+        variable.Gold += reward;
         Console.WriteLine("Du hast das Wildschwein besiegt!");
-        Console.WriteLine("Du erhälst " + rnd + " Goldmünzen!");
+        Console.WriteLine("Du erhälst " + reward + " Goldmünzen!");
         variable.Monsterhp = saved;
         Console.WriteLine(variable.Monsterhp);
     }
@@ -218,8 +224,8 @@ class Program
         Console.WriteLine("Willkommen in der Hauptstadt!");
         Console.WriteLine("Hier gibt es einiges zu sehen!");
         Console.WriteLine("Gebe die jeweiligen Nummern ein, was du tun willst");
-        Console.WriteLine("1: Waffen & Rüstungsladen");
-        Console.WriteLine("2: Bar");
+        Console.WriteLine("1: Schmiede");
+        Console.WriteLine("2: Taverne");
         Console.WriteLine("3: Questtafel");
         Console.WriteLine("4: Stadt verlassen");
 
@@ -227,10 +233,10 @@ class Program
         switch (choice)
         {
             case "1":
-                Weapon();
+                Schmiede();
                 break;
             case "2":
-                Bar();
+                Taverne();
                 break;
             case "3":
                 Quest();
@@ -244,21 +250,19 @@ class Program
         }
     }
 
-    public void Weapon()
+    public void Schmiede()
     {
         Console.Clear();
-        Console.WriteLine("Willkommen in meinem Waffenladen!");
-        Console.WriteLine("Wie kann ich dir helfen?");
-        Console.WriteLine("Gebe die jeweiligen Nummern ein, was du tun willst");
-        Console.WriteLine("1: Waffen kaufen");
+        Console.WriteLine("Seid gegrüßt, werte Gäste! Herzlich willkommen in meinem bescheidenen Waffenladen.");
+        Console.WriteLine("Wie kann ich Euch heute bei der Auswahl von Rüstungen und Schwertern unterstützen?");
+        Console.WriteLine("1: Schwerter kaufen");
         Console.WriteLine("2: Rüstung kaufen");
-        Console.WriteLine("3: Laden verlassen");
-
+        Console.WriteLine("3: Verlassen");
         string choice = Console.ReadLine();
         switch (choice)
         {
             case "1":
-
+                Console.WriteLine("In meiner bescheidenen Schmiede findet Ihr diese edlen Klingen:");
                 break;
             case "2":
 
@@ -272,10 +276,10 @@ class Program
         }
     }
 
-    public void Bar()
+    public void Taverne()
     {
         Console.Clear();
-        Console.WriteLine("Willkommen in meiner Bar. Was kann ich für dich tun?");
+        Console.WriteLine("Willkommen in meiner Taverne. Was kann ich für dich tun?");
         Console.WriteLine("1. Trinken");
         Console.WriteLine("2. Verlassen");
         
@@ -301,7 +305,7 @@ class Program
                     Thread.Sleep(500);
                     Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
                     Console.ReadKey();
-                    Bar();
+                    Taverne();
                     break;
                 case "2":
                     Console.Clear();
@@ -312,7 +316,7 @@ class Program
                     Thread.Sleep(500);
                     Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
                     Console.ReadKey();
-                    Bar();
+                    Taverne();
                     break;
                 case "3":
                     Console.Clear();
@@ -325,13 +329,13 @@ class Program
                     Thread.Sleep(500);
                     Console.WriteLine("Du hast " + variable.Gold + " Goldmünzen!");
                     Console.ReadKey();
-                    Bar();
+                    Taverne();
                     break;
                 default:
                     Console.Clear();
                     Console.WriteLine("Ein fremdartiger Name für ein Getränk! In unserer Taverne sind wir immer offen für Neues.");
                     Console.ReadKey();
-                    Bar();
+                    Taverne();
                     break;
             }
         } 
