@@ -1,14 +1,7 @@
-﻿using Discord;
-using Discord.Interactions.Builders;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
-using System.Reflection;
-using System.Security.Cryptography;
 using System.Threading;
-using System.Windows.Forms.VisualStyles;
 using TextAdventure;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 class Program
 {
@@ -18,25 +11,47 @@ class Program
 
 
 
+    public static List<Var> swords = new List<Var>()
+        {
+            new Var() { SwordName = "Anfängerschwert", SwordDamage = 1 , Preis = 200},
+            new Var() { SwordName = "Wolfslayer", SwordDamage = 4 , Preis = 300},
+            new Var() { SwordName = "Ironsides", SwordDamage = 7 , Preis = 100000},
+            new Var() { SwordName = "Ravenshadow", SwordDamage = 18 , Preis = 100000},
+            new Var() { SwordName = "Templar's Oath", SwordDamage = 23 , Preis = 100000},
+            new Var() { SwordName = "Bloodletter", SwordDamage = 34 , Preis = 100000},
+            new Var() { SwordName = "Grimfang", SwordDamage = 80 , Preis = 100000},
+            new Var() { SwordName = "Hawkstrike", SwordDamage = 119 , Preis = 100000},
+            new Var() { SwordName = "Kingslayer", SwordDamage = 239 , Preis = 100000},
+            new Var() { SwordName = "Dragonsbane", SwordDamage = 308 , Preis = 100000},
+            new Var() { SwordName = "Thornblade", SwordDamage = 556 , Preis = 100000},
+            new Var() { SwordName = "Wyrmcleaver", SwordDamage = 912 , Preis = 100000},
+            new Var() { SwordName = "Valiant Edge", SwordDamage = 1625 , Preis = 100000},
+            new Var() { SwordName = "Blackthorn", SwordDamage = 2250 , Preis = 100000},
+            new Var() { SwordName = "Ironclad", SwordDamage = 3500 , Preis = 100000},
+            new Var() { SwordName = "Stormbringer", SwordDamage = 6000 , Preis = 100000},
+            new Var() { SwordName = "Silverthorn", SwordDamage = 15000, Preis = 100000},
+            new Var() { SwordName = "Lionheart", SwordDamage = 25000, Preis = 100000},
+            new Var() { SwordName = "Excalibur", SwordDamage = 40000, Preis = 100000}
+
+
+        };
+
     public Program()
     {
         variable.Saved = 5;
         variable.Monsterlvl = 1;
         variable.Monsterhp = 5;
-        variable.Schwertdmg = 1;
+        variable.SwordDamage = swords[0].SwordDamage;
         variable.Leben = 100;
         variable.Damage = 1;
-
+        variable.SwordName = swords[0].SwordName;
     }
+
+
 
     static void Main(string[] args)
     {
-        List<Swords> swords = new List<Swords>()
-        {
-        new Swords() { Name = "Anfängerschwert", Damage = 1 },
-        new Swords() { Name = "Drachenklinge", Damage = 5 },
-        new Swords() { Name = "Dead Sword", Damage = 10 },
-        };
+
 
         Program program = new Program();
 
@@ -44,9 +59,7 @@ class Program
         {
             Console.Clear();
             program.variable.Gold = 200;
-            Console.WriteLine(swords[0].Name + swords[0].Damage);
-            Console.WriteLine(swords[1].Name + swords[1].Damage);
-            Console.WriteLine(swords[2].Name + swords[2].Damage);
+           
             Console.WriteLine("Willkommen im RPG Game :D");
             Console.WriteLine("Wähle deinen Charakter!");
             Console.WriteLine("*********************");
@@ -101,7 +114,8 @@ class Program
         }
     }
 
-    public void Spiel()
+
+    public void Spiel() 
     {
         Thread.Sleep(500);
         Console.Clear();
@@ -118,9 +132,9 @@ class Program
         Thread.Sleep(1500);
         Console.WriteLine("Hier hast du ein Schwert");
         Thread.Sleep(1500);
-        string schwert = "Anfängerschwert";
 
-        Console.WriteLine("+1 " + schwert);
+
+        Console.WriteLine("+1 " + variable.SwordName);
         Thread.Sleep(2000);
         Console.Clear();
         Farming();
@@ -134,8 +148,8 @@ class Program
             double fast2 = 2000 * variable.Geschwindigkeit;
             double fast = 2000 - fast2;
             Thread.Sleep(1000);
-            double dmg1 = variable.Schwertdmg * variable.Stärke;
-            double dmg = variable.Schwertdmg + dmg1;
+            double dmg1 = variable.SwordDamage * variable.Stärke;
+            double dmg = variable.SwordDamage + dmg1;
             variable.Monsterhp = variable.Monsterhp - dmg;
 
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
@@ -160,11 +174,11 @@ class Program
 
     public void HPRechnung()
     {
-        variable.Monsterhp = saved; 
-        double multiplikator = 1.5;
-        variable.Monsterhp *= multiplikator;
+        variable.Monsterhp = saved;
+        double multiplikator = 1.2;
+        variable.Monsterhp *= multiplikator; 
         variable.Monsterlvl++;
-        saved = variable.Monsterhp; 
+        saved = variable.Monsterhp;
         Weiter();
     }
 
@@ -223,8 +237,8 @@ class Program
             int fast3 = Convert.ToInt32(fast2);
             int fast = 2000 - fast3;
             Thread.Sleep(fast);
-            double dmg1 = variable.Schwertdmg * variable.Stärke;
-            double dmg = variable.Schwertdmg + dmg1;
+            double dmg1 = variable.SwordDamage * variable.Stärke;
+            double dmg = variable.SwordDamage + dmg1;
             variable.Monsterhp = variable.Monsterhp - dmg;
 
             Console.WriteLine("Wildschwein: -" + dmg + "hp");
@@ -245,6 +259,7 @@ class Program
                 Console.WriteLine("Du hast nun noch " + variable.Gold + "Gold");
                 Console.WriteLine("Warte 3 Sekunden bis du Spawnst!");
                 variable.Leben = 100;
+                variable.Monsterlvl = 1;
                 Thread.Sleep(4000);
                 Stadt();
             }
@@ -311,7 +326,197 @@ class Program
         switch (choice)
         {
             case "1":
+                Console.WriteLine("Wenn du Informationen über die Schwerter haben möchtest gebe die jeweilige Zahl ein:");
                 Console.WriteLine("In meiner bescheidenen Schmiede findet Ihr diese edlen Klingen:");
+                Console.WriteLine("1: " + swords[0].SwordName);
+                Console.WriteLine("2: " + swords[1].SwordName);
+                Console.WriteLine("3: " + swords[2].SwordName);
+                Console.WriteLine("4: " + swords[3].SwordName);
+                Console.WriteLine("5: " + swords[4].SwordName);
+                Console.WriteLine("6: " + swords[5].SwordName);
+                Console.WriteLine("7: " + swords[6].SwordName);
+                Console.WriteLine("8: " + swords[7].SwordName);
+                Console.WriteLine("9: " + swords[8].SwordName);
+                Console.WriteLine("10: " + swords[9].SwordName);
+                Console.WriteLine("11: " + swords[10].SwordName);
+                Console.WriteLine("12: " + swords[11].SwordName); 
+                Console.WriteLine("13: " + swords[12].SwordName);
+                Console.WriteLine("14: " + swords[13].SwordName);
+                Console.WriteLine("15: " + swords[14].SwordName);
+                Console.WriteLine("16: " + swords[15].SwordName);
+                Console.WriteLine("17: " + swords[16].SwordName);
+                Console.WriteLine("18: " + swords[17].SwordName);
+                Console.WriteLine("19: " + swords[18].SwordName);
+
+                string inputtt = Console.ReadLine();
+                switch (inputtt)
+                {
+                    //variable.SwordName = swords[0].SwordName;
+                    //variable.SwordDamage = swords[0].SwordDamage;
+                    //Console.WriteLine("Du hast erhalten: " + variable.SwordName);
+                    case "1":
+                        Console.Clear();
+                        Console.WriteLine("Anfängerschwert:");
+                        Console.WriteLine("Ein bescheidenes Schwert für den aufstrebenden Krieger!");
+                        Console.WriteLine("Dieses Anfängerschwert ist leicht und handlich, ideal für den Einsteiger.");
+                        Console.WriteLine("Es verursacht einen Schaden von 1 Punkt, aber unterschätzt es nicht, denn auch die größten Abenteuer beginnen oft mit kleinen Schritten.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[0].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.WriteLine("Wolfslayer:");
+                        Console.WriteLine("Das Wolfslayer-Schwert, ein Werk meisterlicher Handwerkskunst!");
+                        Console.WriteLine("Dieses Schwert wurde speziell geschmiedet, um die wildesten Bestien zu besiegen.");
+                        Console.WriteLine("Mit einem Schaden von 4 Punkten ist es ein zuverlässiger Begleiter für jede Jagd.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[1].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.WriteLine("Ironsides:");
+                        Console.WriteLine("Das Schwert der Unverwüstlichkeit!");
+                        Console.WriteLine("Ironsides ist für seine Widerstandsfähigkeit und Stärke bekannt.");
+                        Console.WriteLine("Es kann mit seinem Schaden von 7 Punkten sowohl Verteidigung als auch Angriff bewältigen und wird Euch in jeder Schlacht treu dienen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[2].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "4":
+                        Console.Clear();
+                        Console.WriteLine("Ravenshadow:");
+                        Console.WriteLine("Ein Schwert, so dunkel wie die Nacht!");
+                        Console.WriteLine("Das Ravenshadow-Schwert ist ein Meisterwerk der Finsternis und Verderbnis.");
+                        Console.WriteLine("Mit einem mächtigen Schaden von 18 Punkten wird es die Schatten der Dunkelheit auf Eure Feinde werfen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[3].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "5":
+                        Console.Clear();
+                        Console.WriteLine("Templar's Oath:");
+                        Console.WriteLine("Das Schwert des Templer-Eides!");
+                        Console.WriteLine("Hinter diesem Schwert steht ein heiliger Schwur, und seine 23 Punkte Schaden sind ein Beweis für die Entschlossenheit und das Vertrauen des Templerordens.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[4].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "6":
+                        Console.Clear();
+                        Console.WriteLine("Bloodletter:");
+                        Console.WriteLine("Ein Schwert, das Durst nach Blut hat!");
+                        Console.WriteLine("Das Bloodletter-Schwert ist berüchtigt für seine blutige Spur.");
+                        Console.WriteLine("Mit einem tödlichen Schaden von 34 Punkten wird es Euch zu einem gefürchteten Krieger machen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[5].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "7":
+                        Console.Clear();
+                        Console.WriteLine("Grimfang:");
+                        Console.WriteLine("Das Schwert des Grimfangs, eine Legende unter den Waffen!");
+                        Console.WriteLine("Mit einem erstaunlichen Schaden von 80 Punkten kann es sogar die härtesten Gegner in die Knie zwingen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[6].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "8":
+                        Console.Clear();
+                        Console.WriteLine("Hawkstrike:");
+                        Console.WriteLine("Das Schwert des Falkenangriffs!");
+                        Console.WriteLine("Hawkstrike, benannt nach der Präzision eines Falken, wird mit seinen 119 Punkten Schaden Eure Feinde aus der Ferne treffen und besiegen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[7].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "9":
+                        Console.Clear();
+                        Console.WriteLine("Kingslayer:");
+                        Console.WriteLine("Ein Schwert, das Könige stürzen kann!");
+                        Console.WriteLine("Kingslayer ist ein Symbol der Macht und des Aufruhrs.");
+                        Console.WriteLine("Mit seinen beeindruckenden 239 Punkten Schaden kann es sogar Monarchen beeindrucken.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[8].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "10":
+                        Console.Clear();
+                        Console.WriteLine("Dragonsbane:");
+                        Console.WriteLine("Das Schwert des Drachentöters!");
+                        Console.WriteLine("Dieses beeindruckende Schwert mit 308 Punkten Schaden ist das ultimative Werkzeug gegen die mächtigsten Drachen und Ungeheuer.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[9].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "11":
+                        Console.Clear();
+                        Console.WriteLine("Thornblade:");
+                        Console.WriteLine("Ein Schwert, das von den Dornen der Dunkelheit gewoben wurde!");
+                        Console.WriteLine("Mit seinem beeindruckenden Schaden von 556 Punkten wird das Thornblade Eure Feinde in ein Meer aus Schmerz und Verzweiflung stürzen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[10].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "12":
+                        Console.Clear();
+                        Console.WriteLine("Wyrmcleaver:");
+                        Console.WriteLine("Das Schwert, das die Schuppen der Drachen spaltet!");
+                        Console.WriteLine("Wyrmcleaver ist legendär für seine 912 Punkte Schaden und seine Fähigkeit, selbst die mächtigsten Drachen zur Strecke zu bringen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[11].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "13":
+                        Console.Clear();
+                        Console.WriteLine("Valiant Edge:");
+                        Console.WriteLine("Ein Schwert, das die Tapferkeit der Helden widerspiegelt!");
+                        Console.WriteLine("Valiant Edge, mit seinen 1.625 Punkten Schaden, wird Euch zu einem unbesiegbaren Champion auf dem Schlachtfeld machen und Euch in die Geschichtsbücher eingravieren.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[12].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "14":
+                        Console.Clear();
+                        Console.WriteLine("Blackthorn:");
+                        Console.WriteLine("Das finstere Schwert der Schatten!");
+                        Console.WriteLine("Blackthorn ist berüchtigt für seine 2.250 Punkte Schaden und seine düstere Aura.");
+                        Console.WriteLine("Es wird die Dunkelheit in den Herzen Eurer Feinde entfesseln und ihren Untergang besiegeln.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[13].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "15":
+                        Console.Clear();
+                        Console.WriteLine("Ironclad:");
+                        Console.WriteLine("Das unbezwingbare Schwert der Legenden!");
+                        Console.WriteLine("Mit einem unglaublichen Schaden von 3.500 Punkten ist Ironclad das Symbol der Unverwundbarkeit.");
+                        Console.WriteLine("Es wird Euch in die Geschichtsbücher als unsterblicher Krieger eintragen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[14].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "16":
+                        Console.Clear();
+                        Console.WriteLine("Stormbringer:");
+                        Console.WriteLine("Das Schwert des Sturmbringers, ein Ruf, der die Welt erzittern lässt!");
+                        Console.WriteLine("Dieses Schwert bietet einen verheerenden Schaden von 6.000 Punkten und wird die Himmel selbst zu Euren Verbündeten machen, wenn Ihr es schwingt.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[15].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "17":
+                        Console.Clear();
+                        Console.WriteLine("Silverthorn:");
+                        Console.WriteLine("Ein Schwert aus reinem Silber, geschmiedet in den Sternen!");
+                        Console.WriteLine("Mit einem atemberaubenden Schaden von 15.000 Punkten wird Silverthorn Euch zu einem wahren Helden der Sterne machen und die Dunkelheit vertreiben.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[16].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "18":
+                        Console.Clear();
+                        Console.WriteLine("Lionheart:");
+                        Console.WriteLine("Das Schwert des Löwenherzens!");
+                        Console.WriteLine("Mit einem eindrucksvollen Schaden von 25.000 Punkten spiegelt Lionheart die unerschütterliche Tapferkeit eines wahren Königs wider und wird Euch zu einem Anführer der Legenden machen.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[17].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                    case "19":
+                        Console.Clear();
+                        Console.WriteLine("Excalibur:");
+                        Console.WriteLine("Das legendäre Schwert Excalibur!");
+                        Console.WriteLine("Mit einem beispiellosen Schaden von 40.000 Punkten ist Excalibur ein Symbol für die Macht der Könige.");
+                        Console.WriteLine("Es wird Euch zu einem Herrscher über Schlachten und Schicksal erheben.");
+                        Console.WriteLine("Gewiss, um dieses glorreiche Schwert Euer Eigen zu nennen, sollt Ihr " + swords[18].Preis + " Goldmünzen entrichten. Ein wahrhaft edles Stück, das den Preis wert ist!");
+                        Console.ReadLine();
+                        break;
+                }
                 break;
             case "2":
 
@@ -331,7 +536,7 @@ class Program
         Console.WriteLine("Willkommen in meiner Taverne. Was kann ich für dich tun?");
         Console.WriteLine("1. Trinken");
         Console.WriteLine("2. Verlassen");
-        
+
         string input = Console.ReadLine();
         if (input == "1")
         {
@@ -360,7 +565,7 @@ class Program
                 case "2":
                     Console.Clear();
                     Console.WriteLine("Ah, ein Freund des Feuerschlucker Schnapses! Das macht 3 Goldmünzen");
-                    Thread.Sleep(500); 
+                    Thread.Sleep(500);
                     Console.WriteLine("Hier ist Euer Schnaps!");
                     variable.Gold -= 3;
                     Thread.Sleep(500);
@@ -388,9 +593,9 @@ class Program
                     Taverne();
                     break;
             }
-        } 
-        else 
-        { 
+        }
+        else
+        {
             Console.Clear();
             Stadt();
         }
