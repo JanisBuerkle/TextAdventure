@@ -228,7 +228,7 @@ class Program
     {
         string formatierteMonsterhp = variable.Monsterhp.ToString("F0");
         Random zufallsgenerator = new Random();
-        double rnd = zufallsgenerator.Next(0, 5);
+        double rnd = zufallsgenerator.Next(0, 4);
         Console.WriteLine("Wildschwein " + formatierteMonsterhp + "hp");
         while (variable.Monsterhp > 0)
         {
@@ -259,12 +259,13 @@ class Program
                 Console.WriteLine("Warte 3 Sekunden bis du Spawnst!");
                 variable.Leben = 100;
                 variable.Monsterlvl = 1;
+                variable.Saved = 5;
                 Thread.Sleep(4000);
                 Stadt();
             }
         }
 
-        double rechnung = saved / 10;
+        double rechnung = saved / 4;
         double reward = rnd + rechnung;
 
         string formatierterReward = reward.ToString("F0");
@@ -284,6 +285,7 @@ class Program
     public void Stadt()
     {
         variable.Monsterlvl = 1;
+        variable.Saved = 5;
         Console.Clear();
         Console.WriteLine("Willkommen in der Hauptstadt!");
         Console.WriteLine("Hier gibt es einiges zu sehen!");
