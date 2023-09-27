@@ -223,7 +223,7 @@ class Program
                 break;
         }
     }
-    //Gut
+    //Gut bessa
     public void Wildschwein()
     {
         string formatierteMonsterhp = variable.Monsterhp.ToString("F0");
